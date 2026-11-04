@@ -1,0 +1,32 @@
+# --- Collaborator data: NEVER commit (not ours to publish) ---
+# Nigel's ETL tool bundle (contains sample .raw recordings, logs and an .env file)
+etl-raw-to-parquet-zip.zip
+etl-raw-to-parquet-zip/
+# Nigel's message (private correspondence)
+Nigels_advice.txt
+# Any raw recordings, metadata and converted outputs
+*.raw
+*.note
+*.parquet
+data/
+raw/
+parquet/
+# Secrets / local config
+*.env
+.env*
+# Python / notebooks
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+# macOS
+.DS_Store
+__MACOSX/
+
+# --- NextCloud / OneDrive download of the paper data (Nov 2026) ---
+General stress paper to share Oct 2026/
+OneDrive_*.zip
+*.zip
+# Local figures generated from the private data
+figures/

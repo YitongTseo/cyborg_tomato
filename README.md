@@ -21,6 +21,8 @@ Machine Learning Applied to Plant Electrophysiology", Appl. Sci. 11, 5640**
     ├── inventory.py          one-line summary per recording (samples, rate, hours, mV stats, flat?)
     ├── plot_recordings.py    PNG per recording (full trace, 60 s close-up, histogram) + overview
     ├── paper_text.py         dump the PDFs that came with the dataset to .txt for grepping
+    ├── first_look.sh         the exploratory shell commands from the first session (zip listing, secret scan)
+    ├── peek_fixtures.py      the original quick-look decoder for the ETL sample .raw files
     ├── setup_data.sh         unzip the collaborator bundles into data/
     └── install_git_hooks.sh  pre-commit hook that refuses data files / anything > 5 MB
 ```

@@ -1,5 +1,8 @@
 # cyborg_tomato
 
+**New here? Read [DATA_WALKTHROUGH.md](DATA_WALKTHROUGH.md) first.** It walks through what the
+data is, what we have, and what the paper did with it.
+
 Tooling for exploring the plant-electrophysiology dataset behind
 **Najdenovska et al. 2021, "Identifying General Stress in Commercial Tomatoes Based on
 Machine Learning Applied to Plant Electrophysiology", Appl. Sci. 11, 5640**
@@ -49,8 +52,7 @@ From the readme shipped with the paper:
 * Each plant is one **`.mat` file** with variables `mV` (signal) and `calaxis` (time axis).
 * Each recording is **24 h normal state followed by 24 h stressed state**.
 * Stressors: drought (12 plants), spider mites (12), nutrient deficit (12: Mn, Fe, N, Ca x 3).
-* Train/test split is listed in the readme: 30 plants train, 6 test
-  (`deficitMn2+_B7, deficitCa2+_F4, drought_G1B6, drought_G3C3, spidermites_C1, spidermites_F5`).
+* Train/test split is listed in the readme: 30 plants train, 6 test.
 
 **Status (4 Nov 2026):** the PDFs and readme have been downloaded. The 36 `.mat` files
 (and/or the original `.raw` directory Nigel linked) have **not** been downloaded yet.

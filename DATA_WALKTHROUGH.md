@@ -3,7 +3,7 @@
 A plain-language tour of the data Nigel Wallbridge (Vivent) shared for the
 tomato general-stress study. Read this first; `README.md` covers the tooling.
 
-Last updated 4 Nov 2026. Figures referenced below are generated locally into
+Last updated 7 Nov 2026. Figures referenced below are generated locally into
 `figures/` (git-ignored) by `scripts/plot_recordings.py`; they will show up in
 this document once you have run it.
 
@@ -139,7 +139,62 @@ science; it is only useful for checking that decoding and timestamps work.
 
 ---
 
-## 5. Decoding the raw format by hand
+## 5. How plants behave under stress (from the paper, until our data arrives)
+
+The paper's Figure 2 is the clearest picture of what we are going to see. It
+shows one plant per stressor, 24 h healthy on top and 24 h stressed below,
+with night shaded grey. Extracted locally to
+`figures/paper/Fig2_normal_vs_stressed_by_stressor.png`
+(the article is CC BY open access).
+
+![Figure 2](figures/paper/Fig2_normal_vs_stressed_by_stressor.png)
+
+What to look for, column by column:
+
+| Stressor | Normal day | Stressed day | Rough reading |
+|---|---|---|---|
+| **Drought** | Flat and quiet at night (~20 mV), climbs to ~130 mV through the day, drops at dusk. Clean day/night rhythm. | Whole signal sits higher (100 to 200 mV), is far noisier, and the night-time quiet is gone; the rhythm is still visible but buried in fast fluctuations. | Wilting plant is "louder" at all hours; amplitude of fast activity is the giveaway. |
+| **Ca deficit** | Small daytime hump (0 to 30 mV) over a quiet night baseline. | Baseline shifts negative, daytime hump is smaller, and the noise band is wider all day. | Subtler than drought: a loss of the daytime rise plus more high-frequency jitter. |
+| **Spider mites** | Big, well-defined dawn rise (-60 to +100 mV) with a slow afternoon recovery. | Dawn rise collapses into a short spike; the rest of the day is bursty, square-ish noise with no diurnal shape. | The circadian structure falls apart; the signal switches between noisy and quiet in blocks. |
+
+Three take-aways that match the paper's feature ranking:
+
+1. **Absolute level is not diagnostic.** Healthy and stressed plants overlap
+   in mV, and every plant has its own offset. That is why the mean rarely
+   shows up as a top feature.
+2. **Short-window variance is.** Within any 1-minute window, stressed plants
+   fluctuate more. Variance is the single best feature in the supplement.
+3. **Signal "shape" changes.** Hjorth complexity (how the frequency content
+   wanders inside a window) is the most consistently ranked feature across
+   window lengths. Stressed signals are less smooth, more irregular.
+
+### 5a. Reproducing this view on the full dataset
+
+`scripts/compare_states.py` is written for exactly this and has been
+smoke-tested on the one real sample recording. Once the 36 plant files are in
+`data/general_stress/`, run
+
+```bash
+python scripts/compare_states.py data/general_stress
+```
+
+and look in `figures/general_stress/` for:
+
+| File | What it shows |
+|---|---|
+| `1_traces_by_stressor.png` | Figure 2 rebuilt from our data: one plant per stressor, normal row vs stressed row |
+| `2_all_plants_<stressor>.png` | Every plant of that stressor with normal (green) and stressed (red) overlaid, so you can judge how consistent the effect is across plants |
+| `3_features_by_stressor.png` | Boxplots of per-minute variance and Hjorth complexity, normal vs stressed, per stressor: the paper's two star features |
+| `4_spectra_by_stressor.png` | Median power spectrum normal vs stressed, per stressor: where in frequency the extra activity lives |
+| `features_per_minute.csv` | The per-window numbers behind the boxplots, ready for a classifier |
+
+`--demo` runs the same pipeline on the first 48 h of the sample `P1`
+recording (output in `figures/demo_compare_states/`). That is only a smoke
+test: `P1` has no stressor and its "stressed" half is just hours 24 to 48.
+
+---
+
+## 6. Decoding the raw format by hand
 
 A `.raw` file is nothing but little-endian 32-bit integers, one per sample.
 Everything needed to interpret it is in the paired `.txt` config, which is a
@@ -180,7 +235,7 @@ rate from `calaxis`; if the files are MATLAB v7.3 (HDF5) it falls back to
 
 ---
 
-## 6. What the paper does with it (so you know what to reproduce)
+## 7. What the paper does with it (so you know what to reproduce)
 
 1. **Notch filter** at 50 Hz and 100 Hz to remove mains hum.
 2. **Sliding segments**: a segment of N windows of length l ending at time t0.
@@ -203,7 +258,7 @@ rate from `calaxis`; if the files are MATLAB v7.3 (HDF5) it falls back to
 
 ---
 
-## 7. Open questions and next steps
+## 8. Open questions and next steps
 
 * **Get the recordings.** Download the NextCloud directory itself (the `.mat`
   files or the `.raw` folders) into `data/general_stress/` before the link
@@ -220,7 +275,7 @@ rate from `calaxis`; if the files are MATLAB v7.3 (HDF5) it falls back to
 
 ---
 
-## 8. Glossary
+## 9. Glossary
 
 | Term | Meaning |
 |---|---|
